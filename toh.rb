@@ -1,10 +1,11 @@
 class TowerOfHanoi
   def initialize(towerlength)
     @towerlength = towerlength
-    @tower1 = (1..towerlength).to_a
+    @tower1 = (1..towerlength).to_a.reverse
     @tower2 = []
     @tower3 = []
     @move_count = 0
+  #  game_begin
   end
   
   def move(num1,num2)
@@ -12,27 +13,57 @@ class TowerOfHanoi
     num2 = num2.to_i
      if num1 == 1
        if num2 == 2
-         piece = @tower1.pop
-         @tower2 << piece  
+         if @tower2 != [] && @tower1[-1] > @tower2[-1]
+           puts "Cannot move large disk on smaller disk\n\n"
+           sleep 1
+         else
+           piece = @tower1.pop
+           @tower2 << piece
+         end
        elsif num2 == 3
-         piece = @tower1.pop
-         @tower3 << piece
+         if @tower3 != [] && @tower1[-1] > @tower3[-1]
+           puts "Cannot move large disk on smaller disk\n\n"
+           sleep 1
+         else
+           piece = @tower1.pop
+           @tower3 << piece
+         end
        end       
      elsif num1 == 2
        if num2 == 1
-         piece = @tower2.pop
-         @tower1 << piece  
+         if @tower1 != [] && @tower2[-1] > @tower1[-1]
+           puts "Cannot move large disk on smaller disk\n\n"
+           sleep 1
+         else
+           piece = @tower2.pop
+           @tower1 << piece
+         end
        elsif num2 == 3
-         piece = @tower2.pop
-         @tower3 << piece
+         if @tower3 != [] && @tower2[-1] > @tower3[-1]
+           puts "Cannot move large disk on smaller disk\n\n"
+           sleep 1
+         else
+           piece = @tower2.pop
+           @tower3 << piece
+         end
        end    
      elsif num1 == 3
        if num2 == 2
-         piece = @tower3.pop
-         @tower2 << piece  
+         if @tower2 != [] && @tower3[-1] > @tower2[-1]
+           puts "Cannot move large disk on smaller disk\n\n"
+           sleep 1
+         else
+           piece = @tower3.pop
+           @tower2 << piece
+         end
        elsif num2 == 1
-         piece = @tower3.pop
-         @tower1 << piece
+         if @tower1 != [] && @tower3[-1] > @tower1[-1]
+           puts "Cannot move large disk on smaller disk\n\n"
+           sleep 1
+         else
+           piece = @tower3.pop
+           @tower1 << piece
+         end
        end      
      end    
     @move_count += 1
@@ -42,11 +73,12 @@ class TowerOfHanoi
     puts "Current Board:\n\n"
     puts "Tower One: #{@tower1} \n"
     puts "Tower Two: #{@tower2} \n"
-    puts "Tower Three: #{@tower3} \n"
+    puts "Tower Three: #{@tower3} \n\n"
+    sleep 0.3
   end
   
   def wins?
-    if @tower2 == (1..@towerlength).to_a || @tower3 == (1..@towerlength).to_a
+    if @tower2 == (1..@towerlength).to_a.reverse || @tower3 == (1..@towerlength).to_a.reverse
       puts "Congratulations!!! You have won Tower of Hanoi! It took you #{@move_count} moves to move a tower that was #{@towerlength} high!!!\n\n"
       exit
     end
